@@ -1,9 +1,0 @@
-<resources>
-    <string name="app_name">First Application</string>
-    <string name="my_first_application">Me first application</string>
-    <string name="my">My</string>
-    <string name="first">First</string>
-    <string name="button">Button</string>
-    <string name="my_first_switch">Color</string>
-    <string name="android_logo">android_logo</string>
-</resources>
