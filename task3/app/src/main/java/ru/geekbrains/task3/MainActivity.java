@@ -22,10 +22,10 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private String TAG = "Жизненный цикл";
-    AutoCompleteTextView cityField;
-    CheckBox tempCheckbox;
-    CheckBox windCheckbox;
-    CheckBox pressureCheckbox;
+    private AutoCompleteTextView cityField;
+    private CheckBox tempCheckbox;
+    private CheckBox windCheckbox;
+    private CheckBox pressureCheckbox;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             pressureCheckbox.setChecked(savedInstanceState.getBoolean("pressureCheckBox"));
 
 
-        String[] cities = getResources().getStringArray(R.array.cities);
+        final String[] cities = getResources().getStringArray(R.array.cities);
         List<String> citiesList = Arrays.asList(cities);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, citiesList);
         cityField.setAdapter(adapter);
@@ -64,8 +64,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         buttonEnter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Editable city = cityField.getText();
-                Toast.makeText(getApplicationContext(), "Выбран " + city, Toast.LENGTH_SHORT).show();
+                String city = cityField.getText().toString();
+                boolean cityNotAvailable = true;
+
+                for (int i=0; i< cities.length; i++) {
+                    if (city.equals(cities[i])){
+                        cityNotAvailable = false;
+                        Toast.makeText(getApplicationContext(), "Выбран " + city, Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(MainActivity.this, Main2Activity.class);
+                        intent.putExtra("temperatureCheckBox", tempCheckbox.isChecked());
+                        intent.putExtra("windCheckBox", windCheckbox.isChecked());
+                        intent.putExtra("pressureCheckBox", pressureCheckbox.isChecked());
+                        intent.putExtra("city", city);
+                        startActivity(intent);
+                    }
+                }
+                if (cityNotAvailable)
+                    Toast.makeText(getApplicationContext(), "Неправильно выбран город", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -150,9 +165,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
 
-        CheckBox tempCheckbox = findViewById(R.id.temperature);
-        CheckBox windCheckbox = findViewById(R.id.windSpeed);
-        CheckBox pressureCheckbox = findViewById(R.id.atmospere);
+        tempCheckbox = findViewById(R.id.temperature);
+        windCheckbox = findViewById(R.id.windSpeed);
+        pressureCheckbox = findViewById(R.id.atmospere);
         Button button = (Button)v;
         String city = button.getText().toString();
 

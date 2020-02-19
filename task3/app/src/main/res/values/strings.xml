@@ -29,4 +29,12 @@
     <string name="_30">+30</string>
     <string name="_3_5_m_s">3-5 m/s</string>
     <string name="_720mm">720mm</string>
+    <string name="open_in_browser">open in browser</string>
+    <string name="default_Url">https://geekbrains.ru</string>
+    <string name="moscowUrl">https://en.wikipedia.org/wiki/Moscow</string>
+    <string name="stPetersburgUrl">https://en.wikipedia.org/wiki/Saint_Petersburg</string>
+    <string name="newYorkUrl">https://en.wikipedia.org/wiki/New_York_City</string>
+    <string name="londonUrl">https://en.wikipedia.org/wiki/London</string>
+    <string name="parisUrl">https://en.wikipedia.org/wiki/Paris</string>
+    <string name="dubaiUrl">https://en.wikipedia.org/wiki/Dubai</string>
 </resources>
