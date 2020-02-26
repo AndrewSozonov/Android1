@@ -21,14 +21,11 @@ import java.util.List;
 public class CitiesFragment extends Fragment {
 
     private boolean isTemperatureScreenExist;
-    private String currentCity;
+    public static String currentCity;
     private CheckBox temperatureCheckBox;
     private CheckBox windCheckBox;
     private CheckBox pressureCheckBox;
     private AutoCompleteTextView cityField;
-
-    public CitiesFragment() {
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -40,13 +37,13 @@ public class CitiesFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        Button buttonMoscow = (Button)getView().findViewById(R.id.button_Moscow);
-        Button buttonStPetersburg = (Button)getView().findViewById(R.id.button_StPetersburg);
-        Button buttonNewYork = (Button)getView().findViewById(R.id.button_NewYork);
-        Button buttonLondon = (Button)getView().findViewById(R.id.button_London);
-        Button buttonParis = (Button)getView().findViewById(R.id.button_Paris);
-        Button buttonDubai = (Button)getView().findViewById(R.id.button_Dubai);
-        Button buttonEnter = (Button)getView().findViewById(R.id.enter);
+        Button buttonMoscow = getView().findViewById(R.id.button_Moscow);
+        Button buttonStPetersburg = getView().findViewById(R.id.button_StPetersburg);
+        Button buttonNewYork = getView().findViewById(R.id.button_NewYork);
+        Button buttonLondon = getView().findViewById(R.id.button_London);
+        Button buttonParis = getView().findViewById(R.id.button_Paris);
+        Button buttonDubai = getView().findViewById(R.id.button_Dubai);
+        Button buttonEnter = getView().findViewById(R.id.enter);
         cityField = getView().findViewById(R.id.CityField);
 
         View.OnClickListener listener1 = new View.OnClickListener() {
@@ -86,7 +83,6 @@ public class CitiesFragment extends Fragment {
         });
     }
 
-
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -95,6 +91,11 @@ public class CitiesFragment extends Fragment {
         if (savedInstanceState != null ) {
             currentCity = savedInstanceState.getString("current_city");
         }
+        TemperatureFragment tempFrag = (TemperatureFragment) getFragmentManager().findFragmentById(R.id.temperature_screen);
+        if (tempFrag != null) {
+            showTemperatureScreen(currentCity);
+        }
+
     }
 
     @Override
@@ -115,6 +116,7 @@ public class CitiesFragment extends Fragment {
 
         pressureCheckBox = getActivity().findViewById(R.id.atmospere);
         saveInstanceState.putBoolean("pressureCheckBox", pressureCheckBox.isChecked());
+
     }
 
     private void showTemperatureScreen(String city){
@@ -141,10 +143,10 @@ public class CitiesFragment extends Fragment {
         } else {
             Intent intent = new Intent();
             intent.setClass(getActivity(), TemperatureActivity.class);
-            intent.putExtra("temperatureCheckBox", temperatureCheckBox.isChecked());
-            intent.putExtra("windCheckBox", windCheckBox.isChecked());
-            intent.putExtra("pressureCheckBox", pressureCheckBox.isChecked());
-            intent.putExtra("currentCity", currentCity);
+            intent.putExtra("temp", temperatureCheckBox.isChecked());
+            intent.putExtra("wind", windCheckBox.isChecked());
+            intent.putExtra("pressure", pressureCheckBox.isChecked());
+            intent.putExtra("city", currentCity);
             startActivity(intent);
         }
     }
