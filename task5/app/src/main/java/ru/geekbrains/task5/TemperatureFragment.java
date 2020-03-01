@@ -18,6 +18,12 @@ public class TemperatureFragment extends Fragment {
     private TextView fieldTemperature;
     private TextView fieldWind;
     private TextView fieldPressure;
+    public static final String tempKey = "TEMP";
+    public static final String windKey = "WIND";
+    public static final String pressureKey = "PRESSURE";
+    public static final String cityKey = "CITY";
+    private RecyclerView recyclerView;
+    private RecyclerAdapter recyclerAdapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -28,16 +34,16 @@ public class TemperatureFragment extends Fragment {
         TemperatureFragment t = new TemperatureFragment();
 
         Bundle bundle = new Bundle();
-        bundle.putString("city", city);
-        bundle.putBoolean("temp", temp);
-        bundle.putBoolean("wind", wind);
-        bundle.putBoolean("pressure", pressure);
+        bundle.putString(cityKey, city);
+        bundle.putBoolean(tempKey, temp);
+        bundle.putBoolean(windKey, wind);
+        bundle.putBoolean(pressureKey, pressure);
         t.setArguments(bundle);
         return t;
     }
 
     public String getCity() {
-        return getArguments().getString("city");
+        return getArguments().getString(cityKey);
     }
 
     @Override
@@ -62,38 +68,38 @@ public class TemperatureFragment extends Fragment {
         if (savedInstanceState == null) {
 
             fieldCity = getActivity().findViewById(R.id.fieldCity);
-            if (getArguments().containsKey("city")) {
-                fieldCity.setText(getArguments().getString("city"));
+            if (getArguments().containsKey(cityKey)) {
+                fieldCity.setText(getArguments().getString(cityKey));
             }
 
             fieldTemperature = getActivity().findViewById(R.id.fieldTemperature);
-            if (getArguments().containsKey("temp")) {
-                boolean temperature = getArguments().getBoolean("temp");
+            if (getArguments().containsKey(tempKey)) {
+                boolean temperature = getArguments().getBoolean(tempKey);
                 if (temperature) fieldTemperature.setVisibility(View.VISIBLE);
             }
 
             fieldWind = getActivity().findViewById(R.id.fieldWind);
-            if (getArguments().containsKey("wind")) {
-                boolean wind = getArguments().getBoolean("wind");
+            if (getArguments().containsKey(windKey)) {
+                boolean wind = getArguments().getBoolean(windKey);
                 if (wind) fieldWind.setVisibility(View.VISIBLE);
             }
 
             fieldPressure = getActivity().findViewById(R.id.fieldPressure);
-            if (getArguments().containsKey("pressure")) {
-                boolean pressure = getArguments().getBoolean("pressure");
+            if (getArguments().containsKey(pressureKey)) {
+                boolean pressure = getArguments().getBoolean(pressureKey);
                 if (pressure) fieldPressure.setVisibility(View.VISIBLE);
             }
         }
     }
 
     private void initRecyclerView(String[] dataTime, String [] dataTemp) {
-        RecyclerView recyclerView = getView().findViewById(R.id.recycler_view);
+        recyclerView = getView().findViewById(R.id.recycler_view);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         layoutManager.setOrientation(RecyclerView.HORIZONTAL);
         recyclerView.setLayoutManager(layoutManager);
 
-        RecyclerAdapter recyclerAdapter = new RecyclerAdapter(dataTime, dataTemp);
+        recyclerAdapter = new RecyclerAdapter(dataTime, dataTemp);
         recyclerView.setAdapter(recyclerAdapter);
     }
 
