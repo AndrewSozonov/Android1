@@ -5,21 +5,22 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
 import java.util.ArrayList;
+
 public class HistoryActivity extends AppCompatActivity {
 
-    ArrayList<String> citiesHistory;
+    private ArrayList<String> citiesHistory;
     float[] temperatureHistory;
     private RecyclerView historyRecyclerView;
     private HistoryRecyclerAdapter historyRecyclerAdapter;
-    public static final String historyKey = "HISTORY";
-    public static final String historyTemperatureKey = "HISTORY_TEMPERATURE";
+    public static final String HISTORY_KEY = "HISTORY";
+    public static final String HISTORY_TEMPERATURE_KEY = "HISTORY_TEMPERATURE";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.history_layout);
-        citiesHistory = getIntent().getStringArrayListExtra(historyKey);
-        temperatureHistory = getIntent().getFloatArrayExtra(historyTemperatureKey);
+        citiesHistory = getIntent().getStringArrayListExtra(HISTORY_KEY);
+        temperatureHistory = getIntent().getFloatArrayExtra(HISTORY_TEMPERATURE_KEY);
 
         initRecyclerView(citiesHistory, temperatureHistory);
     }
