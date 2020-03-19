@@ -1,36 +1,34 @@
 package ru.geekbrains.task5;
+
+
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-import android.os.Handler;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+
 import com.google.android.material.textfield.TextInputEditText;
-import com.google.gson.Gson;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.MalformedURLException;
-import java.net.URL;
+
 import java.util.ArrayList;
-import java.util.stream.Collectors;
-import javax.net.ssl.HttpsURLConnection;
+
 import ru.geekbrains.task5.model.WeatherRequest;
 
 public class CitiesFragment extends Fragment {
 
     private static final String TAG = "Weather";
-    private static final String WEATHER_API_KEY = "43dad43a0a9a1275403cb230692b0369";
     private boolean isTemperatureScreenExist;
     private static String currentCity;
     private TextInputEditText cityField;
     private WeatherRequest currentWeatherRequest;
+    private Presenter presenter;
     public static final String TEMP_FIELD_KEY = "TEMP_FIELD";
     public static final String WIND_FIELD_KEY = "WIND_FIELD";
     public static final String PRESSURE_FIELD_KEY = "PRESSURE_FIELD";
@@ -44,10 +42,10 @@ public class CitiesFragment extends Fragment {
     private ArrayList<Float> temperatureHistory = new ArrayList<>();
     private MyBottomSheetDialogFragment dialogFragment;
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         return inflater.inflate(R.layout.fragment_list, container, false);
     }
 
@@ -79,7 +77,16 @@ public class CitiesFragment extends Fragment {
                 } else {
                     currentCity = ((Button) v).getText().toString();
                 }
-                makeWeatherRequest();
+                presenter = new Presenter();
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        currentWeatherRequest = presenter.connectToServer(currentCity);
+                        if (currentWeatherRequest != null) {
+                        showTemperatureScreen(currentCity, currentWeatherRequest);
+                        }
+                    }
+                }).start();
             }
         };
 
@@ -133,10 +140,11 @@ public class CitiesFragment extends Fragment {
 
     private void showTemperatureScreen(String city, WeatherRequest weatherRequest) {
 
-
         float currentTemperature = weatherRequest.getMain().getTemp();
         float currentWind = weatherRequest.getWind().getSpeed();
         int currentPressure = weatherRequest.getMain().getPressure();
+        citiesHistory.add(currentCity);
+        temperatureHistory.add(currentWeatherRequest.getMain().getTemp());
 
         if (isTemperatureScreenExist) {
             TemperatureFragment tempFrag = (TemperatureFragment) getFragmentManager().findFragmentById(R.id.temperature_screen);
@@ -167,10 +175,6 @@ public class CitiesFragment extends Fragment {
         }
     }
 
-    private String getLines(BufferedReader in) {
-        return in.lines().collect(Collectors.joining("\n"));
-    }
-
     private void showHistoryScreen() {
 
         Intent intent = new Intent();
@@ -189,50 +193,38 @@ public class CitiesFragment extends Fragment {
         @Override
         public void onDialogOk() {
             currentCity = dialogFragment.getCurrentCity();
-            makeWeatherRequest();
-        }
-    };
+            presenter = new Presenter();
 
-    private void makeWeatherRequest() {
-        try {
-            final URL uri = new URL("https://api.openweathermap.org/data/2.5/weather?q=" + currentCity + "&units=metric&appid=" + WEATHER_API_KEY);
-            final Handler handler = new Handler();
             new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    HttpsURLConnection urlConnection = null;
-                    try {
-                        urlConnection = (HttpsURLConnection) uri.openConnection();
-                        urlConnection.setRequestMethod("GET");
-                        urlConnection.setReadTimeout(10000);
-                        BufferedReader in = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
-                        String result = getLines(in);
-                        Gson gson = new Gson();
-                        final WeatherRequest weatherRequest = gson.fromJson(result, WeatherRequest.class);
-                        currentWeatherRequest = weatherRequest;
-                        handler.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                showTemperatureScreen(currentCity, weatherRequest);
-                                citiesHistory.add(currentCity);
-                                temperatureHistory.add(weatherRequest.getMain().getTemp());
-                            }
-                        });
-                    } catch (Exception e) {
-                        Log.d(TAG, getString(R.string.connection_error),e);
-
-                    } finally {
-                        if (null != urlConnection) {
-                            urlConnection.disconnect();
-                        }
+                    currentWeatherRequest = presenter.connectToServer(currentCity);
+                    if (currentWeatherRequest != null) {
+                        showTemperatureScreen(currentCity, currentWeatherRequest);
                     }
                 }
             }).start();
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
         }
+    };
+
+    private void showAlertDialogError() {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setMessage(R.string.city_error);
+        builder.setCancelable(false);
+        builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        AlertDialog alert = builder.create();
+        alert.show();
     }
 }
+
+
+
+
 
 
 
