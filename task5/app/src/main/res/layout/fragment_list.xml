@@ -1,142 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    android:orientation="vertical"
+    android:visibility="visible">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/CityField"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="30dp"
-        app:errorEnabled="true"
-        app:layout_constraintEnd_toStartOf="@+id/enter"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+    <ImageView
+        android:id="@+id/pictureRain"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:baselineAlignBottom="false"
+        android:contentDescription="@string/picturerain"
+        android:scaleType="fitXY"
+        app:srcCompat="@drawable/rain" />
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/inputCityField"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/enterCity"
-            android:inputType="textPersonName" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/enter"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="20dp"
-        android:text="@string/Enter"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <ScrollView
         android:id="@+id/scrollView2"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
-        android:background="?attr/colorOnBackground"
         android:focusable="auto"
         android:focusableInTouchMode="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/enter">
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
+            android:id="@+id/buttons_Linear_Layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/button_Moscow"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="@string/moscow"
-                android:visibility="visible" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/button_Rostov"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:focusable="false"
-                android:focusableInTouchMode="true"
-                android:text="@string/rostov"
-                tools:layout_editor_absoluteX="160dp"
-                tools:layout_editor_absoluteY="126dp" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/button_Sochi"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="@string/sochi"
-                tools:layout_editor_absoluteX="160dp"
-                tools:layout_editor_absoluteY="126dp" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/button_Vladivostok"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="@string/vladivostok"
-                tools:layout_editor_absoluteX="160dp"
-                tools:layout_editor_absoluteY="126dp" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/button_Voronezh"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="@string/voronezh"
-                tools:layout_editor_absoluteX="160dp"
-                tools:layout_editor_absoluteY="126dp" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/button_Paris"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="@string/paris"
-                tools:layout_editor_absoluteX="160dp"
-                tools:layout_editor_absoluteY="126dp" />
-
-            <com.google.android.material.button.MaterialButton
-            android:id="@+id/button_History"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="100dp"
-            android:textColor="@color/colorPrimaryDark"
-            android:text="@string/history"
-            tools:layout_editor_absoluteX="160dp"
-            tools:layout_editor_absoluteY="126dp" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/button_Search"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:id="@+id/button_History"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="8dp"
+                android:text="@string/history"
                 android:textColor="@color/colorPrimaryDark"
+                app:backgroundTint="#B3998F8F"
+                tools:layout_editor_absoluteX="160dp"
+                tools:layout_editor_absoluteY="126dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/button_Search"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="8dp"
                 android:text="@string/search"
+                android:textColor="@color/colorPrimaryDark"
+                app:backgroundTint="#B3998F8F"
                 tools:layout_editor_absoluteX="160dp"
                 tools:layout_editor_absoluteY="126dp" />
 
         </LinearLayout>
 
     </ScrollView>
+</FrameLayout>
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>

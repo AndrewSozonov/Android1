@@ -8,13 +8,13 @@
     android:visibility="visible">
 
     <ImageView
-        android:id="@+id/pictureRain"
+        android:id="@+id/backgroundTemperatureFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="fitXY"
         android:baselineAlignBottom="false"
-        android:contentDescription="@string/picturerain"
-        app:srcCompat="@drawable/rain" />
+        android:contentDescription="@string/backgroundBlue"
+        android:scaleType="fitXY"
+        app:srcCompat="@drawable/background_blue" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -29,7 +29,7 @@
             android:shadowDx="5"
             android:shadowDy="5"
             android:shadowRadius="20"
-            android:text="@string/dubai"
+            android:text=""
             android:textAppearance="@style/TextAppearance.AppCompat.Display3"
             android:textColor="#FFFFFF"
             app:autoSizeTextType="uniform"
@@ -42,7 +42,7 @@
             android:id="@+id/fieldTemperature"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="16dp"
             android:shadowColor="#000000"
             android:shadowDx="5"
             android:shadowDy="5"
@@ -52,13 +52,42 @@
             android:textColor="#FFFFFF"
             android:textSize="50sp"
             android:textStyle="italic"
-            android:visibility="invisible"
+            android:visibility="visible"
             app:autoSizeTextType="uniform"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/fieldCity"
             tools:ignore="HardcodedText" />
+
+        <ImageView
+            android:id="@+id/weatherIcon"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="24dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/fieldTemperature" />
+        <TextView
+            android:id="@+id/fieldHumidity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:shadowColor="#000000"
+            android:shadowDx="5"
+            android:shadowDy="5"
+            android:shadowRadius="20"
+            android:text="@string/_3_5_m_s"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            android:textStyle="italic"
+            android:visibility="invisible"
+            app:autoSizeTextType="uniform"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/weatherIcon" />
 
         <TextView
             android:id="@+id/fieldWind"
@@ -71,15 +100,14 @@
             android:shadowRadius="20"
             android:text="@string/_3_5_m_s"
             android:textColor="#FFFFFF"
-            android:textSize="50sp"
+            android:textSize="20sp"
             android:textStyle="italic"
             android:visibility="invisible"
             app:autoSizeTextType="uniform"
-            app:layout_constraintBottom_toTopOf="@+id/fieldPressure"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/fieldTemperature" />
+            app:layout_constraintTop_toBottomOf="@+id/fieldHumidity" />
 
         <TextView
             android:id="@+id/fieldPressure"
@@ -92,7 +120,7 @@
             android:shadowRadius="20"
             android:text="@string/_720mm"
             android:textColor="#FFFFFF"
-            android:textSize="50sp"
+            android:textSize="20sp"
             android:textStyle="italic"
             android:visibility="invisible"
             app:autoSizeTextType="uniform"
@@ -101,23 +129,11 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/fieldWind" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/browser"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            android:text="@string/open_in_browser"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/fieldPressure" />
-
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="50dp"
-            android:layout_marginTop="32dp"
             android:layout_marginEnd="50dp"
             android:layout_marginBottom="32dp"
             android:background="#00FFFFFF"
@@ -127,8 +143,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/browser" />
+            app:layout_constraintStart_toStartOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

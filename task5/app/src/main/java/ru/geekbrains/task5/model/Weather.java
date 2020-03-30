@@ -1,9 +1,16 @@
 package ru.geekbrains.task5.model;
+import com.google.gson.annotations.SerializedName;
 
 public class Weather {
 
+    @SerializedName("main")
     private String main;
+
+    @SerializedName("description")
     private String description;
+
+    @SerializedName("id")
+    private int id;
 
     public String getDescription() {
         return description;
@@ -21,4 +28,7 @@ public class Weather {
         this.main = main;
     }
 
+    public int getId() {
+        return id;
+    }
 }

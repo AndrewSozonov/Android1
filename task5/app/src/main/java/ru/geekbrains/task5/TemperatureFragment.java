@@ -9,47 +9,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
 
 public class TemperatureFragment extends Fragment {
-
-    private TextView fieldCity;
-    private TextView fieldTemperature;
-    private TextView fieldWind;
-    private TextView fieldPressure;
-    public static final String tempFieldKey = "TEMP_FIELD";
-    public static final String windFieldKey = "WIND_FIELD";
-    public static final String pressureFieldKey = "PRESSURE_FIELD";
-    public static final String tempKey = "TEMP";
-    public static final String windKey = "WIND";
-    public static final String pressureKey = "PRESSURE";
-    public static final String cityKey = "CITY";
-    private RecyclerView recyclerView;
-    private RecyclerAdapter recyclerAdapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-    }
-
-    public static TemperatureFragment create(String city, boolean tempField, boolean windField, boolean pressureField, float temperature, float wind, int pressure) {
-        TemperatureFragment t = new TemperatureFragment();
-
-        Bundle bundle = new Bundle();
-        bundle.putString(cityKey, city);
-        bundle.putBoolean(tempFieldKey, tempField);
-        bundle.putBoolean(windFieldKey, windField);
-        bundle.putBoolean(pressureFieldKey, pressureField);
-        bundle.putFloat(tempKey, temperature);
-        bundle.putFloat(windKey, wind);
-        bundle.putInt(pressureKey, pressure);
-        t.setArguments(bundle);
-        return t;
-    }
-
-    public String getCity() {
-        return getArguments().getString(cityKey);
     }
 
     @Override
@@ -62,8 +31,8 @@ public class TemperatureFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        String [] timeArr = getResources().getStringArray(R.array.time);
-        String [] temperatureArr = getResources().getStringArray(R.array.time_temperature);
+        String[] timeArr = getResources().getStringArray(R.array.time);
+        String[] temperatureArr = getResources().getStringArray(R.array.time_temperature);
         initRecyclerView(timeArr, temperatureArr);
     }
 
@@ -71,50 +40,115 @@ public class TemperatureFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        if (savedInstanceState == null) {
+        initFields();
+        setWeatherIcon();
+    }
 
-            fieldCity = getActivity().findViewById(R.id.fieldCity);
-            if (getArguments().containsKey(cityKey)) {
-                fieldCity.setText(getArguments().getString(cityKey));
-            }
+    private void initFields() {
 
-            fieldTemperature = getActivity().findViewById(R.id.fieldTemperature);
-            if (getArguments().containsKey(tempFieldKey)) {
-                boolean temperature = getArguments().getBoolean(tempFieldKey);
-                if (temperature) fieldTemperature.setVisibility(View.VISIBLE);
-            }
-            if (getArguments().containsKey(tempKey)) {
-                fieldTemperature.setText(String.format("%.1f С°",getArguments().getFloat(tempKey)));
-            }
+        TextView fieldCity = getActivity().findViewById(R.id.fieldCity);
+        if (getArguments().containsKey(Constants.CITY_KEY)) {
+            fieldCity.setText(getArguments().getString(Constants.CITY_KEY));
+        }
 
-            fieldWind = getActivity().findViewById(R.id.fieldWind);
-            if (getArguments().containsKey(windFieldKey)) {
-                boolean wind = getArguments().getBoolean(windFieldKey);
-                if (wind) fieldWind.setVisibility(View.VISIBLE);
-            }
-            if (getArguments().containsKey(windKey)) {
-                fieldWind.setText(String.format("%.1f m/s",getArguments().getFloat(windKey)));
-            }
+        TextView fieldTemperature = getActivity().findViewById(R.id.fieldTemperature);
+        if (getArguments().containsKey(Constants.TEMP_KEY)) {
+            fieldTemperature.setText(String.format("%.1f С°", getArguments().getFloat(Constants.TEMP_KEY)));
+        }
 
-            fieldPressure = getActivity().findViewById(R.id.fieldPressure);
-            if (getArguments().containsKey(pressureFieldKey)) {
-                boolean pressure = getArguments().getBoolean(pressureFieldKey);
-                if (pressure) fieldPressure.setVisibility(View.VISIBLE);
-            }
-            if (getArguments().containsKey(pressureKey)) {
-                fieldPressure.setText(String.format("%d mm",getArguments().getInt(pressureKey)));
-            }
+        TextView fieldHumidity = getActivity().findViewById(R.id.fieldHumidity);
+        if (getArguments().containsKey(Constants.HUMIDITY_FIELD_KEY)) {
+            boolean humidity = getArguments().getBoolean(Constants.HUMIDITY_FIELD_KEY);
+            if (humidity) fieldHumidity.setVisibility(View.VISIBLE);
+        }
+        if (getArguments().containsKey(Constants.HUMIDITY_KEY)) {
+            fieldHumidity.setText(String.format("Humidity  " + "%d mm", getArguments().getInt(Constants.HUMIDITY_KEY)));
+        }
+
+        TextView fieldWind = getActivity().findViewById(R.id.fieldWind);
+        if (getArguments().containsKey(Constants.WIND_FIELD_KEY)) {
+            boolean wind = getArguments().getBoolean(Constants.WIND_FIELD_KEY);
+            if (wind) fieldWind.setVisibility(View.VISIBLE);
+        }
+        if (getArguments().containsKey(Constants.WIND_KEY)) {
+            fieldWind.setText(String.format("Wind speed  " + "%.1f m/s", getArguments().getFloat(Constants.WIND_KEY)));
+        }
+
+        TextView fieldPressure = getActivity().findViewById(R.id.fieldPressure);
+        if (getArguments().containsKey(Constants.PRESSURE_FIELD_KEY)) {
+            boolean pressure = getArguments().getBoolean(Constants.PRESSURE_FIELD_KEY);
+            if (pressure) fieldPressure.setVisibility(View.VISIBLE);
+        }
+        if (getArguments().containsKey(Constants.PRESSURE_KEY)) {
+            fieldPressure.setText(String.format("Atmospheric pressure  " + "%d mm", getArguments().getInt(Constants.PRESSURE_KEY)));
         }
     }
 
-    private void initRecyclerView(String[] dataTime, String [] dataTemp) {
-        recyclerView = getView().findViewById(R.id.recycler_view);
+    private void setWeatherIcon() {
+        ImageView weatherIcon = getActivity().findViewById(R.id.weatherIcon);
+        ImageView background = getActivity().findViewById(R.id.backgroundTemperatureFragment);
+        String currentWeatherDescription = getArguments().getString(Constants.DESCRIPTION_KEY);
+        int currentID = getArguments().getInt(Constants.ID_KEY);
+        switch (currentWeatherDescription) {
+            case ("Thunderstorm"):
+                weatherIcon.setImageResource(R.drawable.icon200);
+                Picasso.get()
+                        .load("https://images.unsplash.com/photo-1527572232473-494f1e9c7917?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=668&q=80")
+                        .into(background);
+                break;
+            case ("Drizzle"):
+                weatherIcon.setImageResource(R.drawable.icon300);
+                Picasso.get()
+                        .load("https://images.unsplash.com/photo-1524693788736-5e6f1716beb3?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80")
+                        .into(background);
+                break;
+            case ("Rain"):
+                weatherIcon.setImageResource(R.drawable.icon500_504);
+                Picasso.get()
+                        .load("https://images.unsplash.com/photo-1534274988757-a28bf1a57c17?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=675&q=80")
+                        .into(background);
+                break;
+            case ("Snow"):
+                weatherIcon.setImageResource(R.drawable.icon600);
+                Picasso.get()
+                        .load("https://images.unsplash.com/photo-1547576962-9f4ee7e7a7c1?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60")
+                        .into(background);
+                break;
+            case ("Clear"):
+                weatherIcon.setImageResource(R.drawable.icon800);
+                Picasso.get()
+                        .load("https://images.unsplash.com/photo-1548346941-0f485f3ec808?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60")
+                        .into(background);
+                break;
+            case ("Clouds"):
+                Picasso.get()
+                        .load("https://images.unsplash.com/photo-1556005781-709b99c7dc18?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=564&q=80")
+                        .into(background);
+                switch (currentID) {
+                    case (801):
+                        weatherIcon.setImageResource(R.drawable.icon801);
+                        break;
+                    case (802):
+                        weatherIcon.setImageResource(R.drawable.icon802);
+                        break;
+                    case (803):
+                        weatherIcon.setImageResource(R.drawable.icon803);
+                        break;
+                    case (804):
+                        weatherIcon.setImageResource(R.drawable.icon804);
+                        break;
+                }
+        }
+    }
+
+    private void initRecyclerView(String[] dataTime, String[] dataTemp) {
+        RecyclerView recyclerView = getView().findViewById(R.id.recycler_view);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         layoutManager.setOrientation(RecyclerView.HORIZONTAL);
         recyclerView.setLayoutManager(layoutManager);
 
-        recyclerAdapter = new RecyclerAdapter(dataTime, dataTemp);
+        RecyclerAdapter recyclerAdapter = new RecyclerAdapter(dataTime, dataTemp);
         recyclerView.setAdapter(recyclerAdapter);
     }
 }

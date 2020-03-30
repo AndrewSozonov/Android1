@@ -9,15 +9,10 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
-
-
 public class MainActivity extends AppCompatActivity {
-    public static final String TEMP_FIELD_KEY = "TEMP_FIELD";
-    public static final String WIND_FIELD_KEY = "WIND_FIELD";
-    public static final String PRESSURE_FIELD_KEY = "PRESSURE_FIELD";
-    static final String BROADCAST_ACTION_REQUEST_COMPLETED = "REQUEST_COMPLETED";
+
     private Toolbar toolbar;
-    private boolean temperatureSettings;
+    private boolean humiditySettings;
     private boolean windSettings;
     private boolean pressureSettings;
 
@@ -55,18 +50,16 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             case R.id.action_settings:
                 startSettingsActivity();
-
         }
-
         return super.onOptionsItemSelected(item);
     }
 
     public void startSettingsActivity() {
         Intent intent = new Intent(this, SettingsActivity.class);
 
-        intent.putExtra(TEMP_FIELD_KEY, temperatureSettings);
-        intent.putExtra(WIND_FIELD_KEY, windSettings);
-        intent.putExtra(PRESSURE_FIELD_KEY, pressureSettings);
+        intent.putExtra(Constants.HUMIDITY_FIELD_KEY, humiditySettings);
+        intent.putExtra(Constants.WIND_FIELD_KEY, windSettings);
+        intent.putExtra(Constants.PRESSURE_FIELD_KEY, pressureSettings);
         startActivityForResult(intent, 1);
 
     }
@@ -74,14 +67,12 @@ public class MainActivity extends AppCompatActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(1,1,data);
         if (data == null) {return;}
-        temperatureSettings = data.getBooleanExtra(TEMP_FIELD_KEY, false);
-        windSettings = data.getBooleanExtra(WIND_FIELD_KEY, false);
-        pressureSettings = data.getBooleanExtra(PRESSURE_FIELD_KEY, false);
+        humiditySettings = data.getBooleanExtra(Constants.HUMIDITY_FIELD_KEY, false);
+        windSettings = data.getBooleanExtra(Constants.WIND_FIELD_KEY, false);
+        pressureSettings = data.getBooleanExtra(Constants.PRESSURE_FIELD_KEY, false);
     }
 
-    public boolean isTemperatureSettings() {
-        return temperatureSettings;
-    }
+    public boolean isHumiditySettings() { return humiditySettings; }
 
     public boolean isWindSettings() {
         return windSettings;

@@ -1,9 +1,16 @@
 package ru.geekbrains.task5.model;
+import com.google.gson.annotations.SerializedName;
 
 
 public class Main {
+
+    @SerializedName("temp")
     private float temp;
+
+    @SerializedName("pressure")
     private int pressure;
+
+    @SerializedName("humidity")
     private int humidity;
 
     public float getTemp() {

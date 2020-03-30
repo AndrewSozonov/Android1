@@ -1,12 +1,24 @@
 package ru.geekbrains.task5.model;
+import com.google.gson.annotations.SerializedName;
 
 public class WeatherRequest {
 
+    @SerializedName("coord")
     private Coord coord;
+
+    @SerializedName("weather")
     private Weather[] weather;
+
+    @SerializedName("main")
     private Main main;
+
+    @SerializedName("wind")
     private Wind wind;
+
+    @SerializedName("clouds")
     private Clouds clouds;
+
+    @SerializedName("name")
     private String name;
 
     public Coord getCoord() {

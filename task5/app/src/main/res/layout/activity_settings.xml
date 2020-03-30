@@ -23,10 +23,10 @@
         android:layout_gravity="center">
 
         <CheckBox
-            android:id="@+id/settings_temperature"
+            android:id="@+id/settings_humidity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/temperature"
+            android:text="@string/humidity"
             android:textColor="#FFFFFF"
             android:shadowColor="#000000"
             android:shadowDx="5"

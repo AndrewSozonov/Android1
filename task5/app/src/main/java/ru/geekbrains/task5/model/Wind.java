@@ -1,8 +1,12 @@
 package ru.geekbrains.task5.model;
+import com.google.gson.annotations.SerializedName;
 
 public class Wind {
 
+    @SerializedName("speed")
     private float speed;
+
+    @SerializedName("deg")
     private int deg;
 
     public int getDeg() {
