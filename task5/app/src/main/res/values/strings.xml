@@ -51,4 +51,6 @@
     <string name="search">Search</string>
     <string name="add">Add</string>
     <string name="backgroundBlue">Background_blue</string>
+    <string name="delete">Delete</string>
+    <string name="deleteAll">Delete All</string>
 </resources>
