@@ -14,4 +14,6 @@ public class Constants {
     public static final String ID_KEY = "ID";
     public static final String WEATHER_API_KEY = "43dad43a0a9a1275403cb230692b0369";
     public static final String PREFERENCE_FILE_NAME = "PREFERENCES";
+    public static final String DATE_FORECAST_KEY = "DATE_FORECAST";
+    public static final String TEMPERATURE_FORECAST_KEY = "TEMPERATURE_FORECAST";
 }

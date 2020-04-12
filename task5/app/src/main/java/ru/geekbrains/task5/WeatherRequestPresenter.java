@@ -1,6 +1,8 @@
 package ru.geekbrains.task5;
 
 
+import android.widget.Toast;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -44,15 +46,35 @@ public class WeatherRequestPresenter {
                 });
     }
 
-    public void requestRetrofitTemperature(final String city, String keyApi) {
+    public void requestRetrofitTemperatureByCoord(String lat, String lon, String keyApi) {
 
-        openWeather.loadWeather(city, units, keyApi)
+        openWeather.loadWeatherByCoord(lat, lon, units, keyApi)
+                .enqueue(new Callback<WeatherRequest>() {
+                    @Override
+                    public void onResponse(Call<WeatherRequest> call, Response<WeatherRequest> response) {
+                        if (response.body() != null) {
+                            WeatherRequest request = response.body();
+                            citiesFragment.showTemperatureScreen(request.getCity().getName(), request);
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<WeatherRequest> call, Throwable t) {
+                        citiesFragment.showAlertDialogError();
+                    }
+                });
+    }
+
+    public void requestRetrofitTemperatureHourly(final String city, String keyApi) {
+
+        openWeather.loadWeatherHourly(city, units, keyApi)
                 .enqueue(new Callback<WeatherRequest>() {
                     @Override
                     public void onResponse(Call<WeatherRequest> call, Response<WeatherRequest> response) {
                         if (response.body() != null) {
                             WeatherRequest request = response.body();
                             citiesFragment.showTemperatureScreen(city, request);
+
                         }
                     }
 

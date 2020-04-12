@@ -60,6 +60,17 @@
                 tools:layout_editor_absoluteX="160dp"
                 tools:layout_editor_absoluteY="126dp" />
 
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/button_nearbyWeather"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="8dp"
+                android:text="@string/nearby_weather"
+                android:textColor="@color/colorPrimaryDark"
+                app:backgroundTint="#B3998F8F"
+                tools:layout_editor_absoluteX="160dp"
+                tools:layout_editor_absoluteY="126dp" />
+
         </LinearLayout>
 
     </ScrollView>
