@@ -4,6 +4,9 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -19,6 +22,16 @@ public class MainActivity extends AppCompatActivity {
         setTheme(R.style.AppThemeDark);
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        IntentFilter networkIntentFilter = new IntentFilter();
+        networkIntentFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
+        networkIntentFilter.addAction(WifiManager.WIFI_STATE_CHANGED_ACTION);
+        NetworkInfoReceiver networkInfoReceiver = new NetworkInfoReceiver();
+        registerReceiver(networkInfoReceiver, networkIntentFilter);
+
+        IntentFilter batteryIntentFilter = new IntentFilter(Intent.ACTION_BATTERY_LOW);
+        BatteryLevelReceiver batteryLevelReceiver = new BatteryLevelReceiver();
+        registerReceiver(batteryLevelReceiver, batteryIntentFilter);
     }
 
     @Override
