@@ -11,6 +11,7 @@
         android:id="@+id/pictureRain"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:scaleType="fitXY"
         android:baselineAlignBottom="false"
         android:contentDescription="@string/picturerain"
         app:srcCompat="@drawable/rain" />

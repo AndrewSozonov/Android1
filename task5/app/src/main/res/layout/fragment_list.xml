@@ -143,6 +143,17 @@
                 tools:layout_editor_absoluteX="160dp"
                 tools:layout_editor_absoluteY="126dp" />
 
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/button_History"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="40dp"
+                android:textColor="@color/colorPrimaryDark"
+                android:text="@string/history"
+                tools:layout_editor_absoluteX="160dp"
+                tools:layout_editor_absoluteY="126dp" />
+
         </LinearLayout>
 
     </ScrollView>

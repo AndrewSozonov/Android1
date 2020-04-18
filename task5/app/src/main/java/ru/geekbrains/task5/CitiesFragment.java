@@ -20,6 +20,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.stream.Collectors;
 import javax.net.ssl.HttpsURLConnection;
 import ru.geekbrains.task5.model.WeatherRequest;
@@ -43,6 +44,10 @@ public class CitiesFragment extends Fragment {
     public static final String windKey = "WIND";
     public static final String pressureKey = "PRESSURE";
     public static final String cityKey = "CITY";
+    public static final String historyKey = "HISTORY";
+    public static final String historyTemperatureKey = "HISTORY_TEMPERATURE";
+    private ArrayList<String> citiesHistory = new ArrayList<>();
+    private ArrayList<Float> temperatureHistory = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -60,6 +65,7 @@ public class CitiesFragment extends Fragment {
         Button buttonVladivostok = getView().findViewById(R.id.button_Vladivostok);
         Button buttonParis = getView().findViewById(R.id.button_Paris);
         Button buttonVoronezh = getView().findViewById(R.id.button_Voronezh);
+        Button buttonHistory = getView().findViewById(R.id.button_History);
         final Button buttonEnter = getView().findViewById(R.id.enter);
         cityField = getView().findViewById(R.id.inputCityField);
 
@@ -92,6 +98,8 @@ public class CitiesFragment extends Fragment {
                                     @Override
                                     public void run() {
                                         showTemperatureScreen(currentCity, weatherRequest);
+                                        citiesHistory.add(currentCity);
+                                        temperatureHistory.add(weatherRequest.getMain().getTemp());
                                     }
                                 });
                             } catch (Exception e) {
@@ -121,6 +129,13 @@ public class CitiesFragment extends Fragment {
         buttonParis.setOnClickListener(listener1);
         buttonVoronezh.setOnClickListener(listener1);
         buttonEnter.setOnClickListener(listener1);
+
+        buttonHistory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showHistoryScreen();
+            }
+        });
     }
 
     @Override
@@ -147,13 +162,10 @@ public class CitiesFragment extends Fragment {
         cityField = getActivity().findViewById(R.id.inputCityField);
         String cityFieldText = cityField.getText().toString();
         saveInstanceState.putString("cityField", cityFieldText);
-
         temperatureCheckBox = getActivity().findViewById(R.id.temperature);
         saveInstanceState.putBoolean("tempCheckBox", temperatureCheckBox.isChecked());
-
         windCheckBox = getActivity().findViewById(R.id.windSpeed);
         saveInstanceState.putBoolean("windCheckBox", windCheckBox.isChecked());
-
         pressureCheckBox = getActivity().findViewById(R.id.atmospere);
         saveInstanceState.putBoolean("pressureCheckBox", pressureCheckBox.isChecked());
 
@@ -202,6 +214,19 @@ public class CitiesFragment extends Fragment {
         return in.lines().collect(Collectors.joining("\n"));
     }
 
+    private void showHistoryScreen() {
+
+        Intent intent = new Intent();
+        intent.setClass(getActivity(), HistoryActivity.class);
+        intent.putExtra(historyKey, citiesHistory);
+
+        float[] arrayTemperature = new float[temperatureHistory.size()];
+        for (int i = 0; i < temperatureHistory.size(); i++) {
+            arrayTemperature[i] = temperatureHistory.get(i);
+        }
+        intent.putExtra(historyTemperatureKey, arrayTemperature);
+        startActivity(intent);
+    }
 }
 
 
