@@ -15,32 +15,6 @@
     <string name="_30">+30</string>
     <string name="_3_5_m_s">3-5 m/s</string>
     <string name="_720mm">720mm</string>
-
-    <string-array name="time">
-        <item>09:00</item>
-        <item>10:00</item>
-        <item>11:00</item>
-        <item>12:00</item>
-        <item>13:00</item>
-        <item>14:00</item>
-        <item>15:00</item>
-        <item>16:00</item>
-        <item>17:00</item>
-        <item>18:00</item>
-    </string-array>
-    <string-array name="time_temperature">
-        <item>+24</item>
-        <item>+25</item>
-        <item>+27</item>
-        <item>+29</item>
-        <item>+30</item>
-        <item>+30</item>
-        <item>+27</item>
-        <item>+26</item>
-        <item>+25</item>
-        <item>+24</item>
-
-    </string-array>
     <string name="about">about</string>
     <string name="developed">developed by Andrey Sozonov 2020</string>
     <string name="settings">Settings</string>
@@ -50,6 +24,7 @@
     <string name="ok">OK</string>
     <string name="search">Search</string>
     <string name="add">Add</string>
+    <string name="nearby_weather">Weather Nearby</string>
     <string name="backgroundBlue">Background_blue</string>
     <string name="delete">Delete</string>
     <string name="deleteAll">Delete All</string>

@@ -33,9 +33,8 @@ public class TemperatureFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        String[] timeArr = getResources().getStringArray(R.array.time);
-        String[] temperatureArr = getResources().getStringArray(R.array.time_temperature);
-        initRecyclerView(timeArr, temperatureArr);
+
+        initRecyclerView();
     }
 
     @Override
@@ -141,14 +140,17 @@ public class TemperatureFragment extends Fragment {
         }
     }
 
-    private void initRecyclerView(String[] dataTime, String[] dataTemp) {
+    private void initRecyclerView() {
         RecyclerView recyclerView = getView().findViewById(R.id.recycler_view);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         layoutManager.setOrientation(RecyclerView.HORIZONTAL);
         recyclerView.setLayoutManager(layoutManager);
 
-        RecyclerAdapter recyclerAdapter = new RecyclerAdapter(dataTime, dataTemp);
+        String[] dateForecast = getArguments().getStringArray(Constants.DATE_FORECAST_KEY);
+        String[] temperatureForecast = getArguments().getStringArray(Constants.TEMPERATURE_FORECAST_KEY);
+
+        RecyclerAdapter recyclerAdapter = new RecyclerAdapter(dateForecast, temperatureForecast);
         recyclerView.setAdapter(recyclerAdapter);
     }
 }
