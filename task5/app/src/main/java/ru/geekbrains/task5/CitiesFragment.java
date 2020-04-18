@@ -10,10 +10,9 @@ import androidx.fragment.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CheckBox;
+import com.google.android.material.textfield.TextInputEditText;
 import java.util.Arrays;
 import java.util.List;
 
@@ -21,11 +20,15 @@ import java.util.List;
 public class CitiesFragment extends Fragment {
 
     private boolean isTemperatureScreenExist;
-    public static String currentCity;
+    private static String currentCity;
     private CheckBox temperatureCheckBox;
     private CheckBox windCheckBox;
     private CheckBox pressureCheckBox;
-    private AutoCompleteTextView cityField;
+    private TextInputEditText cityField;
+    public static final String tempKey = "TEMP";
+    public static final String windKey = "WIND";
+    public static final String pressureKey = "PRESSURE";
+    public static final String cityKey = "CITY";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -44,7 +47,7 @@ public class CitiesFragment extends Fragment {
         Button buttonParis = getView().findViewById(R.id.button_Paris);
         Button buttonDubai = getView().findViewById(R.id.button_Dubai);
         Button buttonEnter = getView().findViewById(R.id.enter);
-        cityField = getView().findViewById(R.id.CityField);
+        cityField = getView().findViewById(R.id.inputCityField);
 
         View.OnClickListener listener1 = new View.OnClickListener() {
             @Override
@@ -63,22 +66,24 @@ public class CitiesFragment extends Fragment {
 
         final String[] cities = getResources().getStringArray(R.array.cities);
         List<String> citiesList = Arrays.asList(cities);
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity().getApplicationContext(),android.R.layout.simple_dropdown_item_1line, citiesList);
-        cityField.setAdapter(adapter);
-        cityField.setThreshold(1);
 
         buttonEnter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 final String[] cities = getResources().getStringArray(R.array.cities);
                 String city = cityField.getText().toString();
+                boolean cityExist = false;
+                String errorMessage = getString(R.string.cityError);
 
                 for (int i=0; i< cities.length; i++) {
                     if (city.equals(cities[i])){
                         currentCity = city;
                         showTemperatureScreen(currentCity);
+                        cityExist = true;
                     }
                 }
+                if (cityExist) {cityField.setError(null);}
+                else {cityField.setError(errorMessage);}
             }
         });
     }
@@ -104,7 +109,7 @@ public class CitiesFragment extends Fragment {
         super.onSaveInstanceState(saveInstanceState);
 
         saveInstanceState.putString("current_city", currentCity);
-        cityField = getActivity().findViewById(R.id.CityField);
+        cityField = getActivity().findViewById(R.id.inputCityField);
         String cityFieldText = cityField.getText().toString();
         saveInstanceState.putString("cityField", cityFieldText);
 
@@ -143,10 +148,10 @@ public class CitiesFragment extends Fragment {
         } else {
             Intent intent = new Intent();
             intent.setClass(getActivity(), TemperatureActivity.class);
-            intent.putExtra("temp", temperatureCheckBox.isChecked());
-            intent.putExtra("wind", windCheckBox.isChecked());
-            intent.putExtra("pressure", pressureCheckBox.isChecked());
-            intent.putExtra("city", currentCity);
+            intent.putExtra(tempKey, temperatureCheckBox.isChecked());
+            intent.putExtra(windKey, windCheckBox.isChecked());
+            intent.putExtra(pressureKey, pressureCheckBox.isChecked());
+            intent.putExtra(cityKey, currentCity);
             startActivity(intent);
         }
     }

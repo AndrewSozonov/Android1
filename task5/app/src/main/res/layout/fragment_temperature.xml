@@ -8,12 +8,12 @@
     android:visibility="visible">
 
     <ImageView
-        android:id="@+id/picturDubai"
+        android:id="@+id/pictureRain"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:baselineAlignBottom="false"
-        android:contentDescription="@string/picturedubai"
-        app:srcCompat="@drawable/dubai" />
+        android:contentDescription="@string/picturerain"
+        app:srcCompat="@drawable/rain" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -100,7 +100,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/fieldWind" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/browser"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
