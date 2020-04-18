@@ -1,8 +1,12 @@
 package ru.geekbrains.task5.model;
+import com.google.gson.annotations.SerializedName;
 
 public class Coord {
 
+    @SerializedName("lat")
     private float lat;
+
+    @SerializedName("lon")
     private float lon;
 
     public float getLon() {

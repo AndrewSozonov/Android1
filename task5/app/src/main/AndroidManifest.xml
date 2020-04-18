@@ -11,22 +11,21 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SettingsActivity"></activity>
-        <activity android:name=".HistoryActivity" />
-        <activity android:name=".TemperatureActivity" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".SettingsActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".HistoryActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".TemperatureActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".MainActivity"
+            android:screenOrientation="portrait">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <service
-            android:name=".WeatherRequestService"
-            android:exported="false">
-
-        </service>
-
     </application>
 
 </manifest>

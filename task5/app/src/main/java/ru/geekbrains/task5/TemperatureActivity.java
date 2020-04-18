@@ -1,11 +1,8 @@
 package ru.geekbrains.task5;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.widget.CheckBox;
-import android.widget.Toast;
 
 public class TemperatureActivity extends AppCompatActivity {
 
