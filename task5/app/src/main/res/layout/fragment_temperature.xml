@@ -41,7 +41,7 @@
             android:id="@+id/fieldTemperature"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="32dp"
             android:shadowColor="#000000"
             android:shadowDx="5"
             android:shadowDy="5"
@@ -63,7 +63,7 @@
             android:id="@+id/fieldWind"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="32dp"
             android:shadowColor="#000000"
             android:shadowDx="5"
             android:shadowDy="5"
@@ -84,7 +84,7 @@
             android:id="@+id/fieldPressure"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="32dp"
             android:shadowColor="#000000"
             android:shadowDx="5"
             android:shadowDy="5"
@@ -104,12 +104,30 @@
             android:id="@+id/browser"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="32dp"
             android:text="@string/open_in_browser"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/fieldPressure" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="50dp"
+            android:layout_marginBottom="32dp"
+            android:background="#00FFFFFF"
+            android:isScrollContainer="false"
+            android:layoutDirection="inherit"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/browser" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

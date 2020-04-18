@@ -34,4 +34,29 @@
     <string name="londonUrl">https://en.wikipedia.org/wiki/London</string>
     <string name="parisUrl">https://en.wikipedia.org/wiki/Paris</string>
     <string name="dubaiUrl">https://en.wikipedia.org/wiki/Dubai</string>
+    <string-array name="time">
+        <item>09:00</item>
+        <item>10:00</item>
+        <item>11:00</item>
+        <item>12:00</item>
+        <item>13:00</item>
+        <item>14:00</item>
+        <item>15:00</item>
+        <item>16:00</item>
+        <item>17:00</item>
+        <item>18:00</item>
+    </string-array>
+    <string-array name="time_temperature">
+        <item>+24</item>
+        <item>+25</item>
+        <item>+27</item>
+        <item>+29</item>
+        <item>+30</item>
+        <item>+30</item>
+        <item>+27</item>
+        <item>+26</item>
+        <item>+25</item>
+        <item>+24</item>
+        implementation 'androidx.recyclerview:recyclerview:1.1.0'
+    </string-array>
 </resources>

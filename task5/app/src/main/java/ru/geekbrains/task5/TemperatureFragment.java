@@ -1,20 +1,15 @@
 package ru.geekbrains.task5;
 
-
-import android.content.res.Configuration;
 import android.os.Bundle;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-
-import android.sax.StartElementListener;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
 import android.widget.TextView;
-import android.widget.Toast;
 
 
 public class TemperatureFragment extends Fragment {
@@ -24,11 +19,14 @@ public class TemperatureFragment extends Fragment {
     private TextView fieldWind;
     private TextView fieldPressure;
 
-    public TemperatureFragment() {
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
     }
 
     public static TemperatureFragment create(String city, boolean temp, boolean wind, boolean pressure) {
         TemperatureFragment t = new TemperatureFragment();
+
         Bundle bundle = new Bundle();
         bundle.putString("city", city);
         bundle.putBoolean("temp", temp);
@@ -37,6 +35,7 @@ public class TemperatureFragment extends Fragment {
         t.setArguments(bundle);
         return t;
     }
+
     public String getCity() {
         return getArguments().getString("city");
     }
@@ -51,48 +50,54 @@ public class TemperatureFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
-
-            fieldCity = getActivity().findViewById(R.id.fieldCity);
-            fieldCity.setText(getArguments().getString("city"));
-
-            fieldTemperature = getActivity().findViewById(R.id.fieldTemperature);
-            boolean temperature = getArguments().getBoolean("temp");
-            if (temperature) fieldTemperature.setVisibility(View.VISIBLE);
-
-            fieldWind = getActivity().findViewById(R.id.fieldWind);
-            boolean wind = getArguments().getBoolean("wind");
-            if (wind) fieldWind.setVisibility(View.VISIBLE);
-
-            fieldPressure = getActivity().findViewById(R.id.fieldPressure);
-            boolean pressure = getArguments().getBoolean("pressure");
-            if (pressure) fieldPressure.setVisibility(View.VISIBLE);
-        }
+        String [] timeArr = getResources().getStringArray(R.array.time);
+        String [] temperatureArr = getResources().getStringArray(R.array.time_temperature);
+        initRecyclerView(timeArr, temperatureArr);
     }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
         if (savedInstanceState == null) {
-            if (getResources().getConfiguration().orientation != Configuration.ORIENTATION_LANDSCAPE) {
 
-                fieldCity = getActivity().findViewById(R.id.fieldCity);
-                String currentCity = getActivity().getIntent().getExtras().getString("currentCity");
-                fieldCity.setText(currentCity);
+            fieldCity = getActivity().findViewById(R.id.fieldCity);
+            if (getArguments().containsKey("city")) {
+                fieldCity.setText(getArguments().getString("city"));
+            }
 
-                fieldTemperature = getActivity().findViewById(R.id.fieldTemperature);
-                boolean isTemperatureCheckBox = getActivity().getIntent().getExtras().getBoolean("temperatureCheckBox");
-                if (isTemperatureCheckBox) fieldTemperature.setVisibility(View.VISIBLE);
+            fieldTemperature = getActivity().findViewById(R.id.fieldTemperature);
+            if (getArguments().containsKey("temp")) {
+                boolean temperature = getArguments().getBoolean("temp");
+                if (temperature) fieldTemperature.setVisibility(View.VISIBLE);
+            }
 
-                fieldWind = getActivity().findViewById(R.id.fieldWind);
-                boolean isWindCheckBox = getActivity().getIntent().getExtras().getBoolean("windCheckBox");
-                if (isWindCheckBox) fieldWind.setVisibility(View.VISIBLE);
+            fieldWind = getActivity().findViewById(R.id.fieldWind);
+            if (getArguments().containsKey("wind")) {
+                boolean wind = getArguments().getBoolean("wind");
+                if (wind) fieldWind.setVisibility(View.VISIBLE);
+            }
 
-                fieldPressure = getActivity().findViewById(R.id.fieldPressure);
-                boolean isPressureCheckBox = getActivity().getIntent().getExtras().getBoolean("pressureCheckBox");
-                if (isPressureCheckBox) fieldPressure.setVisibility(View.VISIBLE);
+            fieldPressure = getActivity().findViewById(R.id.fieldPressure);
+            if (getArguments().containsKey("pressure")) {
+                boolean pressure = getArguments().getBoolean("pressure");
+                if (pressure) fieldPressure.setVisibility(View.VISIBLE);
             }
         }
     }
+
+    private void initRecyclerView(String[] dataTime, String [] dataTemp) {
+        RecyclerView recyclerView = getView().findViewById(R.id.recycler_view);
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        layoutManager.setOrientation(RecyclerView.HORIZONTAL);
+        recyclerView.setLayoutManager(layoutManager);
+
+        RecyclerAdapter recyclerAdapter = new RecyclerAdapter(dataTime, dataTemp);
+        recyclerView.setAdapter(recyclerAdapter);
+    }
+
 }
+
+
 

@@ -19,8 +19,10 @@ public class TemperatureActivity extends AppCompatActivity {
             return;
         }
 
-        TemperatureFragment tempFrag = new TemperatureFragment();
-        tempFrag.setArguments(getIntent().getExtras());
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, tempFrag).commit();
+        if (savedInstanceState == null) {
+            TemperatureFragment tempFrag = new TemperatureFragment();
+            tempFrag.setArguments(getIntent().getExtras());
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, tempFrag).commit();
+        }
     }
 }
