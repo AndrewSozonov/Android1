@@ -1,5 +1,6 @@
 package ru.geekbrains.task5;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -11,8 +12,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.squareup.picasso.Picasso;
+
+import static android.content.Context.MODE_PRIVATE;
 
 public class TemperatureFragment extends Fragment {
 
@@ -45,6 +47,7 @@ public class TemperatureFragment extends Fragment {
     }
 
     private void initFields() {
+        SharedPreferences sharedPreferences = getContext().getSharedPreferences(Constants.PREFERENCE_FILE_NAME, MODE_PRIVATE);
 
         TextView fieldCity = getActivity().findViewById(R.id.fieldCity);
         if (getArguments().containsKey(Constants.CITY_KEY)) {
@@ -57,28 +60,25 @@ public class TemperatureFragment extends Fragment {
         }
 
         TextView fieldHumidity = getActivity().findViewById(R.id.fieldHumidity);
-        if (getArguments().containsKey(Constants.HUMIDITY_FIELD_KEY)) {
-            boolean humidity = getArguments().getBoolean(Constants.HUMIDITY_FIELD_KEY);
-            if (humidity) fieldHumidity.setVisibility(View.VISIBLE);
-        }
+        boolean humidity = sharedPreferences.getBoolean(Constants.HUMIDITY_FIELD_KEY, false);
+        if (humidity) fieldHumidity.setVisibility(View.VISIBLE);
+
         if (getArguments().containsKey(Constants.HUMIDITY_KEY)) {
             fieldHumidity.setText(String.format("Humidity  " + "%d mm", getArguments().getInt(Constants.HUMIDITY_KEY)));
         }
 
         TextView fieldWind = getActivity().findViewById(R.id.fieldWind);
-        if (getArguments().containsKey(Constants.WIND_FIELD_KEY)) {
-            boolean wind = getArguments().getBoolean(Constants.WIND_FIELD_KEY);
-            if (wind) fieldWind.setVisibility(View.VISIBLE);
-        }
+        boolean wind = sharedPreferences.getBoolean(Constants.WIND_FIELD_KEY, false);
+        if (wind) fieldWind.setVisibility(View.VISIBLE);
+
         if (getArguments().containsKey(Constants.WIND_KEY)) {
             fieldWind.setText(String.format("Wind speed  " + "%.1f m/s", getArguments().getFloat(Constants.WIND_KEY)));
         }
 
         TextView fieldPressure = getActivity().findViewById(R.id.fieldPressure);
-        if (getArguments().containsKey(Constants.PRESSURE_FIELD_KEY)) {
-            boolean pressure = getArguments().getBoolean(Constants.PRESSURE_FIELD_KEY);
-            if (pressure) fieldPressure.setVisibility(View.VISIBLE);
-        }
+        boolean pressure = sharedPreferences.getBoolean(Constants.PRESSURE_FIELD_KEY, false);
+        if (pressure) fieldPressure.setVisibility(View.VISIBLE);
+
         if (getArguments().containsKey(Constants.PRESSURE_KEY)) {
             fieldPressure.setText(String.format("Atmospheric pressure  " + "%d mm", getArguments().getInt(Constants.PRESSURE_KEY)));
         }

@@ -2,6 +2,7 @@ package ru.geekbrains.task5;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -12,6 +13,7 @@ public class SettingsActivity extends AppCompatActivity {
     private CheckBox humidityCheckBox;
     private CheckBox windCheckBox;
     private CheckBox pressureCheckBox;
+    SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,9 +23,10 @@ public class SettingsActivity extends AppCompatActivity {
         windCheckBox = findViewById(R.id.settings_windSpeed);
         pressureCheckBox = findViewById(R.id.settings_atmosphere);
 
-        humidityCheckBox.setChecked(getIntent().getBooleanExtra(Constants.HUMIDITY_FIELD_KEY, false));
-        windCheckBox.setChecked(getIntent().getBooleanExtra(Constants.WIND_FIELD_KEY, false));
-        pressureCheckBox.setChecked(getIntent().getBooleanExtra(Constants.PRESSURE_FIELD_KEY, false));
+        sharedPreferences = getSharedPreferences(Constants.PREFERENCE_FILE_NAME, MODE_PRIVATE);
+        humidityCheckBox.setChecked(sharedPreferences.getBoolean(Constants.HUMIDITY_FIELD_KEY, false));
+        windCheckBox.setChecked(sharedPreferences.getBoolean(Constants.WIND_FIELD_KEY, false));
+        pressureCheckBox.setChecked(sharedPreferences.getBoolean(Constants.PRESSURE_FIELD_KEY, false));
 
         Button buttonOk = findViewById(R.id.button_ok);
         buttonOk.setOnClickListener(buttonOkClickListener);
@@ -36,10 +39,15 @@ public class SettingsActivity extends AppCompatActivity {
             humidityCheckBox = findViewById(R.id.settings_humidity);
             windCheckBox = findViewById(R.id.settings_windSpeed);
             pressureCheckBox = findViewById(R.id.settings_atmosphere);
+
+            sharedPreferences = getSharedPreferences(Constants.PREFERENCE_FILE_NAME, MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putBoolean(Constants.HUMIDITY_FIELD_KEY, humidityCheckBox.isChecked());
+            editor.putBoolean(Constants.WIND_FIELD_KEY, windCheckBox.isChecked());
+            editor.putBoolean(Constants.PRESSURE_FIELD_KEY, pressureCheckBox.isChecked());
+            editor.commit();
+
             Intent intent = new Intent();
-            intent.putExtra(Constants.HUMIDITY_FIELD_KEY, humidityCheckBox.isChecked());
-            intent.putExtra(Constants.WIND_FIELD_KEY, windCheckBox.isChecked());
-            intent.putExtra(Constants.PRESSURE_FIELD_KEY, pressureCheckBox.isChecked());
             setResult(RESULT_OK, intent);
             finish();
         }
