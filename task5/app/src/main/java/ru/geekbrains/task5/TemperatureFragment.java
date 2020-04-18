@@ -18,6 +18,9 @@ public class TemperatureFragment extends Fragment {
     private TextView fieldTemperature;
     private TextView fieldWind;
     private TextView fieldPressure;
+    public static final String tempFieldKey = "TEMP_FIELD";
+    public static final String windFieldKey = "WIND_FIELD";
+    public static final String pressureFieldKey = "PRESSURE_FIELD";
     public static final String tempKey = "TEMP";
     public static final String windKey = "WIND";
     public static final String pressureKey = "PRESSURE";
@@ -30,14 +33,17 @@ public class TemperatureFragment extends Fragment {
         super.onCreate(savedInstanceState);
     }
 
-    public static TemperatureFragment create(String city, boolean temp, boolean wind, boolean pressure) {
+    public static TemperatureFragment create(String city, boolean tempField, boolean windField, boolean pressureField, float temperature, float wind, int pressure) {
         TemperatureFragment t = new TemperatureFragment();
 
         Bundle bundle = new Bundle();
         bundle.putString(cityKey, city);
-        bundle.putBoolean(tempKey, temp);
-        bundle.putBoolean(windKey, wind);
-        bundle.putBoolean(pressureKey, pressure);
+        bundle.putBoolean(tempFieldKey, tempField);
+        bundle.putBoolean(windFieldKey, windField);
+        bundle.putBoolean(pressureFieldKey, pressureField);
+        bundle.putFloat(tempKey, temperature);
+        bundle.putFloat(windKey, wind);
+        bundle.putInt(pressureKey, pressure);
         t.setArguments(bundle);
         return t;
     }
@@ -73,21 +79,30 @@ public class TemperatureFragment extends Fragment {
             }
 
             fieldTemperature = getActivity().findViewById(R.id.fieldTemperature);
-            if (getArguments().containsKey(tempKey)) {
-                boolean temperature = getArguments().getBoolean(tempKey);
+            if (getArguments().containsKey(tempFieldKey)) {
+                boolean temperature = getArguments().getBoolean(tempFieldKey);
                 if (temperature) fieldTemperature.setVisibility(View.VISIBLE);
+            }
+            if (getArguments().containsKey(tempKey)) {
+                fieldTemperature.setText(String.format("%.1f С°",getArguments().getFloat(tempKey)));
             }
 
             fieldWind = getActivity().findViewById(R.id.fieldWind);
-            if (getArguments().containsKey(windKey)) {
-                boolean wind = getArguments().getBoolean(windKey);
+            if (getArguments().containsKey(windFieldKey)) {
+                boolean wind = getArguments().getBoolean(windFieldKey);
                 if (wind) fieldWind.setVisibility(View.VISIBLE);
+            }
+            if (getArguments().containsKey(windKey)) {
+                fieldWind.setText(String.format("%.1f m/s",getArguments().getFloat(windKey)));
             }
 
             fieldPressure = getActivity().findViewById(R.id.fieldPressure);
-            if (getArguments().containsKey(pressureKey)) {
-                boolean pressure = getArguments().getBoolean(pressureKey);
+            if (getArguments().containsKey(pressureFieldKey)) {
+                boolean pressure = getArguments().getBoolean(pressureFieldKey);
                 if (pressure) fieldPressure.setVisibility(View.VISIBLE);
+            }
+            if (getArguments().containsKey(pressureKey)) {
+                fieldPressure.setText(String.format("%d mm",getArguments().getInt(pressureKey)));
             }
         }
     }
@@ -102,7 +117,6 @@ public class TemperatureFragment extends Fragment {
         recyclerAdapter = new RecyclerAdapter(dataTime, dataTemp);
         recyclerView.setAdapter(recyclerAdapter);
     }
-
 }
 
 

@@ -97,40 +97,40 @@
                 android:visibility="visible" />
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/button_StPetersburg"
+                android:id="@+id/button_Rostov"
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:focusable="false"
                 android:focusableInTouchMode="true"
-                android:text="@string/st_petersburg"
+                android:text="@string/rostov"
                 tools:layout_editor_absoluteX="160dp"
                 tools:layout_editor_absoluteY="126dp" />
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/button_NewYork"
+                android:id="@+id/button_Sochi"
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="@string/new_york"
+                android:text="@string/sochi"
                 tools:layout_editor_absoluteX="160dp"
                 tools:layout_editor_absoluteY="126dp" />
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/button_London"
+                android:id="@+id/button_Vladivostok"
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="@string/london"
+                android:text="@string/vladivostok"
                 tools:layout_editor_absoluteX="160dp"
                 tools:layout_editor_absoluteY="126dp" />
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/button_Dubai"
+                android:id="@+id/button_Voronezh"
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="@string/dubai"
+                android:text="@string/voronezh"
                 tools:layout_editor_absoluteX="160dp"
                 tools:layout_editor_absoluteY="126dp" />
 
