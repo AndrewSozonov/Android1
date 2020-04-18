@@ -9,10 +9,13 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+
+
 public class MainActivity extends AppCompatActivity {
     public static final String TEMP_FIELD_KEY = "TEMP_FIELD";
     public static final String WIND_FIELD_KEY = "WIND_FIELD";
     public static final String PRESSURE_FIELD_KEY = "PRESSURE_FIELD";
+    static final String BROADCAST_ACTION_REQUEST_COMPLETED = "REQUEST_COMPLETED";
     private Toolbar toolbar;
     private boolean temperatureSettings;
     private boolean windSettings;
